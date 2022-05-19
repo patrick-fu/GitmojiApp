@@ -1,7 +1,5 @@
 {
   "name": "gitmojiapp",
-  "version": "0.1.0",
-  "description": "",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "17.0.0",
