@@ -1,0 +1,14 @@
+# We use LLVM's style guide (similar but looks better than Google)
+BasedOnStyle: LLVM
+
+# Indent 4 spaces at a time.
+IndentWidth: 4
+
+# Keep lines under 100 columns long.
+ColumnLimit: 100
+
+# Do not reflow comments
+ReflowComments: false
+
+# For ObjC, add a space after @property
+ObjCSpaceAfterProperty: true

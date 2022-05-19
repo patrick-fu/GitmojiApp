@@ -1,0 +1,14 @@
+{
+  "name": "gitmojiapp",
+  "version": "0.1.0",
+  "description": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "17.0.0",
+    "@commitlint/config-conventional": "17.0.0",
+    "husky": "8.0.1"
+  },
+  "scripts": {
+    "postinstall": "husky install"
+  }
+}

@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo 'Manually git fetch and prune...'
+git fetch origin --prune --prune-tags

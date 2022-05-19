@@ -1,0 +1,12 @@
+# base
+.DS_Store
+.idea/
+.vscode/
+.vs/
+xcuserdata
+__pycache__
+
+# develop deps
+node_modules/
+package-lock.json
+yarn.lock
