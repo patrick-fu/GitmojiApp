@@ -1,13 +1,30 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GitmojiDataModel {
   static String url =
       'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json';
 
-  static Future<GitmojiDataModel> fetchGitmojiData() async {
+  /// Get the gitmoji data from the cache or from the network.
+  static Future<GitmojiDataModel> getGitmojiData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? gitmojis = prefs.getString('gitmojis');
+    if (gitmojis != null) {
+      return GitmojiDataModel.fromJson(gitmojis);
+    } else {
+      return GitmojiDataModel.updateGitmojiData();
+    }
+  }
+
+  /// Update the gitmojis data from the internet.
+  /// And store it in the shared preferences.
+  static Future<GitmojiDataModel> updateGitmojiData() async {
     final response = await Dio().get(url);
-    return GitmojiDataModel.fromJson(response.data.toString());
+    final gitmojis = response.data.toString();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('gitmojis', gitmojis);
+    return GitmojiDataModel.fromJson(gitmojis);
   }
 
   GitmojiDataModel({
