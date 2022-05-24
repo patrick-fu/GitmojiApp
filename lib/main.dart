@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:gitmojiapp/home_page.dart';
+import 'package:gitmojiapp/models/gitmoji_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: ChangeNotifierProvider(
+        create: (context) => GitmojiViewModel(),
+        child: const HomePage(),
+      ),
     );
   }
 }

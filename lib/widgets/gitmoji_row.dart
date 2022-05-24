@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gitmojiapp/gitmoji_data_model.dart';
+import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 
 class GitmojiRow extends StatelessWidget {
   const GitmojiRow({Key? key, required this.dataSource}) : super(key: key);

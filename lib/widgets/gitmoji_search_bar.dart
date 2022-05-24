@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gitmojiapp/gitmoji_data_model.dart';
+import 'package:provider/provider.dart';
+import 'package:gitmojiapp/models/gitmoji_view_model.dart';
 
 class GitmojiSearchBar extends StatelessWidget {
-  const GitmojiSearchBar({Key? key, required this.dataSource})
-      : super(key: key);
-
-  final List<Gitmoji> dataSource;
+  const GitmojiSearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +18,21 @@ class GitmojiSearchBar extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(20)),
       child: Row(
-        children: const [
-          Text(
+        children: [
+          const Text(
             '🔍',
             style: TextStyle(fontSize: 24),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              onChanged: (value) {
+                var gitmojiViewModel = context.read<GitmojiViewModel>();
+                gitmojiViewModel.filterText = value;
+              },
+              decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Search..',
               ),

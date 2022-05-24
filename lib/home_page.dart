@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gitmojiapp/gitmoji_data_model.dart';
+import 'package:gitmojiapp/models/gitmoji_view_model.dart';
+import 'package:provider/provider.dart';
+import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/widgets/gitmoji_row.dart';
 import 'package:gitmojiapp/widgets/gitmoji_search_bar.dart';
 
@@ -11,12 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  GitmojiDataModel? gitmojiData;
-
   @override
   void initState() {
     GitmojiDataModel.getGitmojiData().then((value) {
-      setState(() => gitmojiData = value);
+      setState(() {
+        context.read<GitmojiViewModel>().allGitmojis = value.gitmojis;
+      });
     });
     super.initState();
   }
@@ -25,25 +27,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      body: Column(
-        children: [
-          GitmojiSearchBar(dataSource: gitmojiData?.gitmojis ?? []),
-          Expanded(
-            child: ListView(children: _buildListTiles(context)),
-          ),
-        ],
+      body: Consumer<GitmojiViewModel>(
+        builder: (context, model, child) {
+          return Column(
+            children: [
+              const GitmojiSearchBar(),
+              Expanded(
+                child: ListView(children: [
+                  for (int index = 0;
+                      index < model.filteredGitmojis.length;
+                      index++)
+                    GitmojiRow(dataSource: model.filteredGitmojis[index])
+                ]),
+              ),
+            ],
+          );
+        },
       ),
     );
-  }
-
-  List<Widget> _buildListTiles(BuildContext context) {
-    if (gitmojiData == null) {
-      return const <Widget>[];
-    } else {
-      return [
-        for (int index = 0; index < gitmojiData!.gitmojis.length; index++)
-          GitmojiRow(dataSource: gitmojiData!.gitmojis[index])
-      ];
-    }
   }
 }
