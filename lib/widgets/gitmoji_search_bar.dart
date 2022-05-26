@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gitmojiapp/settings_page.dart';
 import 'package:provider/provider.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
 
@@ -38,6 +39,17 @@ class GitmojiSearchBar extends StatelessWidget {
               ),
             ),
           ),
+          IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return SettingsPage(onDismiss: () {
+                        Navigator.of(context).pop();
+                      });
+                    });
+              })
         ],
       ),
     );
