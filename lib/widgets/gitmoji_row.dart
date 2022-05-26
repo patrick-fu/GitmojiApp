@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 
 class GitmojiRow extends StatelessWidget {
@@ -17,7 +18,7 @@ class GitmojiRow extends StatelessWidget {
       minLeadingWidth: 30,
       mouseCursor: SystemMouseCursors.basic,
       onTap: () {
-        // TODO: Copy the emoji
+        Clipboard.setData(ClipboardData(text: dataSource.emoji));
       },
     );
   }
