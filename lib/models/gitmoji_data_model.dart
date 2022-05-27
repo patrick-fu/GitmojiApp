@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 
 class GitmojiDataModel {
   static String url =
@@ -8,9 +8,8 @@ class GitmojiDataModel {
 
   /// Get the gitmoji data from the cache or from the network.
   static Future<GitmojiDataModel> getGitmojiData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? gitmojis = prefs.getString('gitmojis');
-    if (gitmojis != null) {
+    final String gitmojis = GitmojiPersistence().gitmojisJson;
+    if (gitmojis.isNotEmpty) {
       return GitmojiDataModel.fromJson(gitmojis);
     } else {
       return GitmojiDataModel.updateGitmojiData();
@@ -22,8 +21,7 @@ class GitmojiDataModel {
   static Future<GitmojiDataModel> updateGitmojiData() async {
     final response = await Dio().get(url);
     final gitmojis = response.data.toString();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('gitmojis', gitmojis);
+    GitmojiPersistence().gitmojisJson = gitmojis;
     return GitmojiDataModel.fromJson(gitmojis);
   }
 

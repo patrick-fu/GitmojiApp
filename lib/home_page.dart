@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:gitmojiapp/models/gitmoji_data_model.dart';
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    GitmojiPersistence().initialize();
     GitmojiDataModel.getGitmojiData().then((value) {
       setState(() {
         context.read<GitmojiViewModel>().allGitmojis = value.gitmojis;

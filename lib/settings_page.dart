@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-enum EmojiValueToCopyType {
-  emoji,
-  code,
-}
+import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 
 class SettingsPage extends StatefulWidget {
   final VoidCallback? onDismiss;
@@ -15,8 +11,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  // TODO: Use a global configuration instance to manage this value.
-  EmojiValueToCopyType _chosenType = EmojiValueToCopyType.emoji;
+  EmojiValueToCopyType _chosenType = GitmojiPersistence().emojiValueToCopyType;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onChanged: (value) {
                 setState(() {
                   _chosenType = value ?? EmojiValueToCopyType.emoji;
+                  GitmojiPersistence().emojiValueToCopyType = _chosenType;
                 });
               },
             ),
