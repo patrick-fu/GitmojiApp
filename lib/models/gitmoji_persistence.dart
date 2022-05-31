@@ -7,14 +7,15 @@ enum EmojiValueToCopyType {
 
 class GitmojiPersistence {
   GitmojiPersistence._privateConstructor();
-  static final GitmojiPersistence _instance = GitmojiPersistence._privateConstructor();
+  static final GitmojiPersistence _instance =
+      GitmojiPersistence._privateConstructor();
   factory GitmojiPersistence() {
     return _instance;
   }
 
   SharedPreferences? _prefs;
 
-  void initialize() async {
+  Future<void> initialize() async {
     _prefs = await SharedPreferences.getInstance();
   }
 
@@ -34,5 +35,4 @@ class GitmojiPersistence {
   set emojiValueToCopyType(EmojiValueToCopyType value) {
     _prefs?.setInt('emojiValueToCopyType', value.index);
   }
-
 }
