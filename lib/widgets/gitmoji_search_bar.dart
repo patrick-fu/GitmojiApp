@@ -35,19 +35,23 @@ class GitmojiSearchBar extends StatelessWidget {
               },
               decoration: const InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Search..',
+                hintText: 'Search...',
               ),
             ),
           ),
           IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {
+                final model =
+                    Provider.of<GitmojiViewModel>(context, listen: false);
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return SettingsPage(onDismiss: () {
-                        Navigator.of(context).pop();
-                      });
+                      return ListenableProvider.value(
+                          value: model,
+                          child: SettingsPage(onDismiss: () {
+                            Navigator.of(context).pop();
+                          }));
                     });
               })
         ],

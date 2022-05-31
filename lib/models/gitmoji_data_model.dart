@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:dio/dio.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 
@@ -12,17 +13,28 @@ class GitmojiDataModel {
     if (gitmojis.isNotEmpty) {
       return GitmojiDataModel.fromJson(gitmojis);
     } else {
-      return GitmojiDataModel.updateGitmojiData();
+      final String gitmojis =
+          await rootBundle.loadString('assets/gitmojis.json');
+      GitmojiPersistence().gitmojisJson = gitmojis;
+      return GitmojiDataModel.fromJson(gitmojis);
     }
   }
 
   /// Update the gitmojis data from the internet.
   /// And store it in the shared preferences.
-  static Future<GitmojiDataModel> updateGitmojiData() async {
-    final response = await Dio().get(url);
-    final gitmojis = response.data.toString();
-    GitmojiPersistence().gitmojisJson = gitmojis;
-    return GitmojiDataModel.fromJson(gitmojis);
+  static Future<bool> updateGitmojiData() async {
+    try {
+      BaseOptions options = BaseOptions(
+        connectTimeout: 4000,
+        receiveTimeout: 4000,
+      );
+      final response = await Dio(options).get(url);
+      final gitmojis = response.data.toString();
+      GitmojiPersistence().gitmojisJson = gitmojis;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   GitmojiDataModel({
