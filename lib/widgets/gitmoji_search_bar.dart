@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gitmojiapp/settings_page.dart';
-import 'package:provider/provider.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
+import 'package:provider/provider.dart';
 
 class GitmojiSearchBar extends StatefulWidget {
   const GitmojiSearchBar({Key? key}) : super(key: key);
@@ -31,7 +30,6 @@ class _GitmojiSearchBarState extends State<GitmojiSearchBar> {
           const SizedBox(width: 8),
           Expanded(child: inputTextField(context)),
           clearTextButton(context),
-          settingsButton(context)
         ],
       ),
     );
@@ -60,22 +58,5 @@ class _GitmojiSearchBarState extends State<GitmojiSearchBar> {
         gitmojiViewModel.filterText = '';
       },
     );
-  }
-
-  Widget settingsButton(BuildContext context) {
-    return IconButton(
-        icon: const Icon(Icons.settings),
-        onPressed: () {
-          final model = Provider.of<GitmojiViewModel>(context, listen: false);
-          showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return ListenableProvider.value(
-                    value: model,
-                    child: SettingsPage(onDismiss: () {
-                      Navigator.of(context).pop();
-                    }));
-              });
-        });
   }
 }

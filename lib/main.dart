@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:gitmojiapp/home_page.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
+import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> _ensureInitialized() async {

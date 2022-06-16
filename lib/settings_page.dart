@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
-import 'package:gitmojiapp/models/gitmoji_data_model.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   final VoidCallback? onDismiss;
@@ -25,7 +25,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ? IconButton(
                 onPressed: widget.onDismiss, icon: const Icon(Icons.close))
             : null,
-        title: const Text('Settings'),
+        title: const Text('Settings', style: TextStyle(fontSize: 16)),
+        toolbarHeight: 40,
       ),
       body: ListView(
         children: [
