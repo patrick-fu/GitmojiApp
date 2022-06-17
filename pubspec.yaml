@@ -1,5 +1,5 @@
 name: gitmojiapp
-description: A new Flutter project.
+description: A Gitmoji app for macOS, Linux, and Windows.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
