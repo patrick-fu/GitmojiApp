@@ -35,7 +35,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GitmojiApp', style: TextStyle(fontSize: 16)),
+        title: const DragToMoveArea(
+            child: Text('GitmojiApp', style: TextStyle(fontSize: 16))),
         toolbarHeight: 40,
         leading: alwaysOnTopButton(context),
         actions: [settingsButton(context)],
