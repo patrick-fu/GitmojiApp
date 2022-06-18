@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        path: gitmojiapp
+        path: app
     - uses: actions/checkout@v3
       with:
         path: flutter
@@ -45,24 +45,23 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev liblzma-dev
-    - name: Enable desktop support
-      run: |
-        flutter config --enable-linux-desktop
-        flutter config --enable-macos-desktop
-        flutter config --enable-windows-desktop
     - name: Doctor
       # Run doctor, for ease of debugging any issues.
       run: flutter doctor -v
+    - name: Get packages
+      run: flutter pub get
+      working-directory: ${{ github.workspace }}/app
     - name: Build GitmojiApp release
+      run: flutter build -v ${{matrix.TARGET}} --release
+      working-directory: ${{ github.workspace }}/app
+    - name: Archive macOS App
+      if: startsWith(matrix.os, 'macos')
       run: |
-        flutter pub get
-        flutter build -v ${{matrix.TARGET}} --release
-      working-directory: ${{ github.workspace }}/gitmojiapp
+        codesign --remove-signature app/build/macos/Build/Products/Release/GitmojiApp.app
+        zip -qry GitmojiApp.zip app/build/macos/Build/Products/Release/GitmojiApp.app
     # Upload products to artifacts
     - uses: actions/upload-artifact@v3
       if: startsWith(matrix.os, 'macos')
       with:
-        name: Upload macOS App
-        path: |
-          gitmojiapp/build/macos/Build/Products/Release/GitmojiApp.app
-          gitmojiapp/build/macos/Build/Products/Release/GitmojiApp.app.dSYM
+        name: GitmojiApp-macOS
+        path: GitmojiApp.zip
