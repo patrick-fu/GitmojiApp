@@ -56,9 +56,8 @@ jobs:
       working-directory: ${{ github.workspace }}/app
     - name: Archive macOS App
       if: startsWith(matrix.os, 'macos')
-      run: |
-        codesign --remove-signature app/build/macos/Build/Products/Release/GitmojiApp.app
-        zip -qry GitmojiApp.zip app/build/macos/Build/Products/Release/GitmojiApp.app
+      run: zip -qry GitmojiApp.zip GitmojiApp.app
+      working-directory: ${{ github.workspace }}/app/build/macos/Build/Products/Release
     # Upload products to artifacts
     - uses: actions/upload-artifact@v3
       if: startsWith(matrix.os, 'macos')
