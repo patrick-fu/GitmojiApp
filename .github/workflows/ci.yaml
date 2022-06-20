@@ -8,14 +8,14 @@ jobs:
     strategy:
       matrix:
         # os: [macos-latest, ubuntu-latest, windows-latest]
-        os: [macos-latest]
+        os: [macos-latest, windows-latest]
         include:
         - os: macos-latest
           TARGET: macos
         # - os: ubuntu-latest
         #   TARGET: linux
-        # - os: windows-latest
-        #   TARGET: windows
+        - os: windows-latest
+          TARGET: windows
       # Disable fail-fast; we want results from all OSes even if one fails.
       fail-fast: false
 
@@ -58,9 +58,18 @@ jobs:
       if: startsWith(matrix.os, 'macos')
       run: zip -qry GitmojiApp.zip GitmojiApp.app
       working-directory: ${{ github.workspace }}/app/build/macos/Build/Products/Release
+    - name: Archive Windows App
+      if: startsWith(matrix.os, 'windows')
+      run: flutter pub run msix:create
+      working-directory: ${{ github.workspace }}/app
     # Upload products to artifacts
     - uses: actions/upload-artifact@v3
       if: startsWith(matrix.os, 'macos')
       with:
         name: GitmojiApp-macOS
         path: app/build/macos/Build/Products/Release/GitmojiApp.zip
+    - uses: actions/upload-artifact@v3
+      if: startsWith(matrix.os, 'windows')
+      with:
+        name: GitmojiApp-Windows
+        path: app/build/windows/runner/Release/gitmojiapp.msix
