@@ -63,4 +63,4 @@ jobs:
       if: startsWith(matrix.os, 'macos')
       with:
         name: GitmojiApp-macOS
-        path: GitmojiApp.zip
+        path: app/build/macos/Build/Products/Release/GitmojiApp.zip
