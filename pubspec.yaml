@@ -50,6 +50,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
   icons_launcher: ^1.1.8
+  msix: ^3.6.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -104,3 +105,10 @@ flutter_icons:
   image_path_windows: assets/gitmoji_icon_round.png
   image_path_linux: assets/gitmoji_icon_round.png
   image_path_web: assets/gitmoji_icon_round.png
+
+msix_config:
+  display_name: GitmojiApp
+  publisher_display_name: Patrick Fu
+  identity_name: com.paaatrick.gitmojiapp
+  logo_path: windows\runner\resources\app_icon.ico
+  capabilities: internetClient
