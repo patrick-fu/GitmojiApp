@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
@@ -25,6 +27,16 @@ class _SettingsPageState extends State<SettingsPage> {
             ? IconButton(
                 onPressed: widget.onDismiss, icon: const Icon(Icons.close))
             : null,
+        actions: [
+          Tooltip(
+            message: 'Exit the app',
+            child: IconButton(
+              onPressed: () => exit(0),
+              icon: const Icon(Icons.exit_to_app),
+              color: Colors.red,
+            ),
+          ),
+        ],
         title: const Text('Settings', style: TextStyle(fontSize: 16)),
         toolbarHeight: 40,
       ),
