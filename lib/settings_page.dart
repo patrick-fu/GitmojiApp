@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -16,6 +19,15 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   EmojiValueToCopyType _chosenType = GitmojiPersistence().emojiValueToCopyType;
   GitmojiDataUpdateState _updateState = GitmojiDataUpdateState.none;
+  String _appVersion = '';
+
+  @override
+  void initState() {
+    PackageInfo.fromPlatform().then((value) {
+      setState(() => _appVersion = value.version);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +37,16 @@ class _SettingsPageState extends State<SettingsPage> {
             ? IconButton(
                 onPressed: widget.onDismiss, icon: const Icon(Icons.close))
             : null,
+        actions: [
+          Tooltip(
+            message: 'Exit the app',
+            child: IconButton(
+              onPressed: () => exit(0),
+              icon: const Icon(Icons.exit_to_app),
+              color: Colors.red,
+            ),
+          ),
+        ],
         title: const Text('Settings', style: TextStyle(fontSize: 16)),
         toolbarHeight: 40,
       ),
@@ -33,6 +55,8 @@ class _SettingsPageState extends State<SettingsPage> {
           valueToCopyRow(),
           const Divider(),
           updateGitmojiDataRow(),
+          const Divider(),
+          appVersionRow(),
           const Divider(),
         ],
       ),
@@ -123,6 +147,19 @@ class _SettingsPageState extends State<SettingsPage> {
       case GitmojiDataUpdateState.failed:
         return const Text("❌ Failed!");
     }
+  }
+
+  Widget appVersionRow() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      child: Row(
+        children: [
+          const Text('Version:'),
+          const Spacer(),
+          Text(_appVersion),
+        ],
+      ),
+    );
   }
 }
 
