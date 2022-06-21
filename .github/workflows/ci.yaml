@@ -60,7 +60,10 @@ jobs:
       working-directory: ${{ github.workspace }}/app/build/macos/Build/Products/Release
     - name: Archive Windows App
       if: startsWith(matrix.os, 'windows')
-      run: flutter pub run msix:create
+      run: |
+        flutter pub run msix:build
+        choco install innosetup
+        iscc windows\setup.iss
       working-directory: ${{ github.workspace }}/app
     # Upload products to artifacts
     - uses: actions/upload-artifact@v3
@@ -72,4 +75,4 @@ jobs:
       if: startsWith(matrix.os, 'windows')
       with:
         name: GitmojiApp-Windows
-        path: app/build/windows/runner/Release/gitmojiapp.msix
+        path: app/build/windows/runner/Release/GitmojiAppInstaller.exe
