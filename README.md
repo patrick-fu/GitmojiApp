@@ -2,6 +2,9 @@
 
 A Gitmoji app for macOS, Linux, and Windows.
 
+<img src=.github/assets/app_macos.png width=30%>
+<img src=.github/assets/app_windows.png width=30%>
+
 ## What is this
 
 GitmojiApp is a simple desktop app that allows you to add a [Gitmoji](https://gitmoji.dev) to your git commit messages.
@@ -12,7 +15,9 @@ GitmojiApp is a simple desktop app that allows you to add a [Gitmoji](https://gi
 
 Download the latest prebuilt binary from [Github release](https://github.com/patrick-fu/GitmojiApp/releases)
 
-> Note that the  macOS App is not notarized by Apple, so you should codesign it by yourself, otherwise you can not open it.
+> Note that the  macOS App is not notarized by Apple, so you should right click the "GitmojiApp.app" and select "Open" for the first time, then move it to your `/Applications` folder.
+
+Or you can codesign it by yourself to make it a trusted app.
 
 ```bash
 # Unzip the artifact and cd into the folder
@@ -34,3 +39,9 @@ $ flutter build linux
 # On Windows
 $ flutter build windows
 ```
+
+## Todo
+
+- [ ] Tray mode
+- [ ] Font embedded
+- [ ] Select emoji style (Apple / Google / Twitter / etc.)
