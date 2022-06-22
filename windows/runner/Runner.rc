@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "gitmojiapp" "\0"
+            VALUE "CompanyName", "Patrick Fu" "\0"
+            VALUE "FileDescription", "GitmojiApp" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "gitmojiapp" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "gitmojiapp.exe" "\0"
-            VALUE "ProductName", "gitmojiapp" "\0"
+            VALUE "InternalName", "GitmojiApp" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 Patrick Fu. All rights reserved." "\0"
+            VALUE "OriginalFilename", "GitmojiApp.exe" "\0"
+            VALUE "ProductName", "GitmojiApp" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
