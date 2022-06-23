@@ -2,8 +2,9 @@
 
 A Gitmoji app for macOS, Linux, and Windows.
 
-<img src=.github/assets/app_macos.png width=30%>
-<img src=.github/assets/app_windows.png width=30%>
+macOS | Linux | Windows
+:----:|:-------:|:-----:
+![macOS app screenshot](.github/assets/app_macos.png)|![Linux app screenshot](.github/assets/app_linux.png)|![Windows app screenshot](.github/assets/app_windows.png)
 
 ## What is this
 
@@ -43,5 +44,7 @@ $ flutter build windows
 ## Todo
 
 - [ ] Tray mode
-- [ ] Font embedded
-- [ ] Select emoji style (Apple / Google / Twitter / etc.)
+- [ ] Dark mode
+- [ ] Color theme
+- [ ] Localization
+- [x] Font embedded
