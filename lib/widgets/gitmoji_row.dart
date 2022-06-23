@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
+import 'package:gitmojiapp/utils/platform_util.dart';
 
 class GitmojiRow extends StatelessWidget {
   const GitmojiRow({Key? key, required this.dataSource}) : super(key: key);
@@ -13,7 +14,8 @@ class GitmojiRow extends StatelessWidget {
     return ListTile(
       leading: Text(
         dataSource.emoji,
-        style: const TextStyle(fontSize: 30),
+        style: TextStyle(
+            fontSize: 30, fontFamily: kIsLinux ? 'NotoColorEmoji' : null),
       ),
       title: Text(dataSource.description),
       minLeadingWidth: 30,

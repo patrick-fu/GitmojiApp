@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
+import 'package:gitmojiapp/utils/platform_util.dart';
 import 'package:provider/provider.dart';
 
 class GitmojiSearchBar extends StatefulWidget {
@@ -26,7 +27,10 @@ class _GitmojiSearchBarState extends State<GitmojiSearchBar> {
           borderRadius: BorderRadius.circular(20)),
       child: Row(
         children: [
-          const Text('🔍', style: TextStyle(fontSize: 24)),
+          Text('🔍',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: kIsLinux ? 'NotoColorEmoji' : null)),
           const SizedBox(width: 8),
           Expanded(child: inputTextField(context)),
           clearTextButton(context),

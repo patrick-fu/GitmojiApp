@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
+import 'package:gitmojiapp/utils/platform_util.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -75,12 +76,14 @@ class _SettingsPageState extends State<SettingsPage> {
           Expanded(
             child: DropdownButton<EmojiValueToCopyType>(
               value: _chosenType,
-              items: const [
+              items: [
                 DropdownMenuItem(
                   value: EmojiValueToCopyType.emoji,
-                  child: Text('emoji (e.g. "🐛")'),
+                  child: Text('emoji (e.g. "🐛")',
+                      style: TextStyle(
+                          fontFamily: kIsLinux ? 'NotoColorEmoji' : null)),
                 ),
-                DropdownMenuItem(
+                const DropdownMenuItem(
                   value: EmojiValueToCopyType.code,
                   child: Text('code (e.g. ":bug:")'),
                 ),
@@ -137,15 +140,16 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _updateGitmojiDataButtonText() {
+    TextStyle style = TextStyle(fontFamily: kIsLinux ? 'NotoColorEmoji' : null);
     switch (_updateState) {
       case GitmojiDataUpdateState.none:
-        return const Text("🌞 Update!");
+        return Text("🌞 Update!", style: style);
       case GitmojiDataUpdateState.updating:
-        return const Text("⏳ Updating...");
+        return Text("⏳ Updating...", style: style);
       case GitmojiDataUpdateState.success:
-        return const Text("✅ Success!");
+        return Text("✅ Success!", style: style);
       case GitmojiDataUpdateState.failed:
-        return const Text("❌ Failed!");
+        return Text("❌ Failed!", style: style);
     }
   }
 
