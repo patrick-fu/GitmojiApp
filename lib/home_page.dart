@@ -4,6 +4,7 @@ import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
 import 'package:gitmojiapp/settings_page.dart';
+import 'package:gitmojiapp/utils/platform_util.dart';
 import 'package:gitmojiapp/widgets/gitmoji_row.dart';
 import 'package:gitmojiapp/widgets/gitmoji_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +17,10 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WindowListener {
   bool _isAlwaysOnTop = false;
+  final FocusNode _focusNode = FocusNode();
+  final TextEditingController _searchTextController = TextEditingController();
 
   @override
   void initState() {
@@ -28,7 +31,18 @@ class _HomePageState extends State<HomePage> {
         });
       });
     });
+    if (kIsMacOS || kIsLinux || kIsWindows) {
+      windowManager.addListener(this);
+    }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (kIsMacOS || kIsLinux || kIsWindows) {
+      windowManager.removeListener(this);
+    }
+    super.dispose();
   }
 
   @override
@@ -45,7 +59,10 @@ class _HomePageState extends State<HomePage> {
         builder: (context, model, child) {
           return Column(
             children: [
-              const GitmojiSearchBar(),
+              GitmojiSearchBar(
+                focusNode: _focusNode,
+                searchTextController: _searchTextController,
+              ),
               Expanded(
                 child: ListView(children: [
                   for (int index = 0;
@@ -101,5 +118,15 @@ class _HomePageState extends State<HomePage> {
                     }));
               });
         });
+  }
+
+  @override
+  void onWindowFocus() async {
+    _focusNode.requestFocus();
+  }
+
+  @override
+  void onWindowBlur() async {
+    _focusNode.unfocus();
   }
 }

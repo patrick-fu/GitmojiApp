@@ -3,15 +3,15 @@ import 'package:gitmojiapp/models/gitmoji_view_model.dart';
 import 'package:gitmojiapp/utils/platform_util.dart';
 import 'package:provider/provider.dart';
 
-class GitmojiSearchBar extends StatefulWidget {
-  const GitmojiSearchBar({Key? key}) : super(key: key);
+class GitmojiSearchBar extends StatelessWidget {
+  final FocusNode focusNode;
+  final TextEditingController searchTextController;
 
-  @override
-  State<GitmojiSearchBar> createState() => _GitmojiSearchBarState();
-}
-
-class _GitmojiSearchBarState extends State<GitmojiSearchBar> {
-  final TextEditingController _searchTextController = TextEditingController();
+  const GitmojiSearchBar({
+    Key? key,
+    required this.focusNode,
+    required this.searchTextController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,8 @@ class _GitmojiSearchBarState extends State<GitmojiSearchBar> {
 
   Widget inputTextField(BuildContext context) {
     return TextField(
-      controller: _searchTextController,
+      focusNode: focusNode,
+      controller: searchTextController,
       onChanged: (value) {
         var gitmojiViewModel = context.read<GitmojiViewModel>();
         gitmojiViewModel.filterText = value;
@@ -57,7 +58,7 @@ class _GitmojiSearchBarState extends State<GitmojiSearchBar> {
     return IconButton(
       icon: const Icon(Icons.clear),
       onPressed: () {
-        _searchTextController.clear();
+        searchTextController.clear();
         var gitmojiViewModel = context.read<GitmojiViewModel>();
         gitmojiViewModel.filterText = '';
       },
