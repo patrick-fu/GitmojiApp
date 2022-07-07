@@ -63,6 +63,8 @@ flutter:
 
   assets:
     - assets/gitmojis.json
+    - assets/tray_icon.ico
+    - assets/tray_icon.png
 
   fonts:
     - family: NotoColorEmoji

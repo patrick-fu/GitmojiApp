@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter/cupertino.dart' hide MenuItem;
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:gitmojiapp/models/gitmoji_data_model.dart';
 import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 import 'package:gitmojiapp/models/gitmoji_view_model.dart';
@@ -8,6 +9,7 @@ import 'package:gitmojiapp/utils/platform_util.dart';
 import 'package:gitmojiapp/widgets/gitmoji_row.dart';
 import 'package:gitmojiapp/widgets/gitmoji_search_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +19,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with WindowListener {
+class _HomePageState extends State<HomePage> with WindowListener, TrayListener {
   bool _isAlwaysOnTop = false;
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _searchTextController = TextEditingController();
@@ -33,6 +35,9 @@ class _HomePageState extends State<HomePage> with WindowListener {
     });
     if (kIsMacOS || kIsLinux || kIsWindows) {
       windowManager.addListener(this);
+      trayManager.addListener(this);
+      setupWindow();
+      setupTrayIcon();
     }
     super.initState();
   }
@@ -41,6 +46,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
   void dispose() {
     if (kIsMacOS || kIsLinux || kIsWindows) {
       windowManager.removeListener(this);
+      trayManager.removeListener(this);
     }
     super.dispose();
   }
@@ -120,6 +126,86 @@ class _HomePageState extends State<HomePage> with WindowListener {
         });
   }
 
+  void setupWindow() {
+    Size minSize = const Size(350, 450);
+    windowManager.setMinimumSize(minSize);
+    WindowOptions windowOptions = WindowOptions(
+      size: minSize,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.hidden,
+    );
+
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.setAsFrameless();
+      await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
+      await Future.delayed(const Duration(milliseconds: 100));
+      await _windowShow();
+    });
+  }
+
+  void setupTrayIcon() async {
+    String trayIconName = kIsWindows ? 'tray_icon.ico' : 'tray_icon.png';
+
+    await trayManager.destroy();
+    await trayManager.setIcon(
+      'assets/$trayIconName',
+      isTemplate: kIsMacOS ? true : false,
+    );
+    await Future.delayed(const Duration(milliseconds: 10));
+    await trayManager.setContextMenu(
+      Menu(
+        items: [
+          MenuItem(key: 'quit', label: 'Quit GitmojiApp'),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _windowShow({
+    bool isShowBelowTray = false,
+  }) async {
+    bool isAlwaysOnTop = await windowManager.isAlwaysOnTop();
+    Size windowSize = await windowManager.getSize();
+
+    if (kIsMacOS && isShowBelowTray) {
+      Rect? trayIconBounds = await trayManager.getBounds();
+      if (trayIconBounds != null) {
+        Size trayIconSize = trayIconBounds.size;
+        Offset trayIconPosition = trayIconBounds.topLeft;
+
+        Offset newPosition = Offset(
+          trayIconPosition.dx - ((windowSize.width - trayIconSize.width) / 2),
+          trayIconPosition.dy,
+        );
+
+        if (!isAlwaysOnTop) {
+          await windowManager.setPosition(newPosition);
+        }
+      }
+    }
+
+    bool isVisible = await windowManager.isVisible();
+    if (!isVisible) {
+      await windowManager.show();
+    } else {
+      await windowManager.focus();
+    }
+
+    // Linux 下无法激活窗口临时解决方案
+    if (kIsLinux && !isAlwaysOnTop) {
+      await windowManager.setAlwaysOnTop(true);
+      await Future.delayed(const Duration(milliseconds: 10));
+      await windowManager.setAlwaysOnTop(false);
+      await Future.delayed(const Duration(milliseconds: 10));
+      await windowManager.focus();
+    }
+  }
+
+  Future<void> _windowHide() async {
+    await windowManager.hide();
+  }
+
   @override
   void onWindowFocus() async {
     _focusNode.requestFocus();
@@ -128,5 +214,28 @@ class _HomePageState extends State<HomePage> with WindowListener {
   @override
   void onWindowBlur() async {
     _focusNode.unfocus();
+    bool isAlwaysOnTop = await windowManager.isAlwaysOnTop();
+    if (!isAlwaysOnTop) {
+      _windowHide();
+    }
+  }
+
+  @override
+  void onTrayIconMouseDown() async {
+    _windowShow(isShowBelowTray: true);
+  }
+
+  @override
+  void onTrayIconRightMouseDown() {
+    trayManager.popUpContextMenu();
+  }
+
+  @override
+  void onTrayMenuItemClick(MenuItem menuItem) async {
+    switch (menuItem.key) {
+      case 'quit':
+        await trayManager.destroy();
+        exit(0);
+    }
   }
 }
