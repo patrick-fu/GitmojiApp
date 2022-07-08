@@ -38,6 +38,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "{#SourcePath}..\build\windows\runner\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourcePath}..\build\windows\runner\Release\flutter_windows.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourcePath}..\build\windows\runner\Release\tray_manager_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourcePath}..\build\windows\runner\Release\window_manager_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourcePath}..\build\windows\runner\Release\msvcp140.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#SourcePath}..\build\windows\runner\Release\vcruntime140.dll"; DestDir: "{app}"; Flags: ignoreversion
