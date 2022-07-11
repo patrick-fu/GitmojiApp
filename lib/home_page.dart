@@ -139,6 +139,7 @@ class _HomePageState extends State<HomePage> with WindowListener, TrayListener {
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.setAsFrameless();
       await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
+      await windowManager.setSkipTaskbar(true);
       await Future.delayed(const Duration(milliseconds: 100));
       await _windowShow();
     });
