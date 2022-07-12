@@ -223,7 +223,12 @@ class _HomePageState extends State<HomePage> with WindowListener, TrayListener {
 
   @override
   void onTrayIconMouseDown() async {
-    _windowShow(isShowBelowTray: true);
+    bool isVisible = await windowManager.isVisible();
+    if (!isVisible) {
+      _windowShow(isShowBelowTray: true);
+    } else {
+      _windowHide();
+    }
   }
 
   @override
