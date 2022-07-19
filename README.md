@@ -43,8 +43,8 @@ $ flutter build windows
 
 ## Todo
 
-- [ ] Tray mode
 - [ ] Dark mode
 - [ ] Color theme
 - [ ] Localization
+- [x] Tray mode
 - [x] Font embedded
