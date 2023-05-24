@@ -5,7 +5,8 @@ import 'package:gitmojiapp/models/gitmoji_persistence.dart';
 
 class GitmojiDataModel {
   static String url =
-      'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json';
+      'https://raw.githubusercontent.com/carloscuesta/gitmoji/master/'
+      'packages/gitmojis/src/gitmojis.json';
 
   /// Get the gitmoji data from the cache or from the network.
   static Future<GitmojiDataModel> getGitmojiData() async {
