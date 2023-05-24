@@ -1,4 +1,5 @@
 {
+  "$schema": "https://gitmoji.dev/api/gitmojis/schema",
   "gitmojis": [
     {
       "emoji": "🎨",
@@ -178,7 +179,7 @@
     },
     {
       "emoji": "♻️",
-      "entity": "&#x2672;",
+      "entity": "&#x267b;",
       "code": ":recycle:",
       "description": "Refactor code.",
       "name": "recycle",
@@ -532,7 +533,7 @@
       "emoji": "👔",
       "entity": "&#128084;",
       "code": ":necktie:",
-      "description": "Add or update business logic",
+      "description": "Add or update business logic.",
       "name": "necktie",
       "semver": "patch"
     },
@@ -556,8 +557,32 @@
       "emoji": "🧑‍💻",
       "entity": "&#129489;&#8205;&#128187;",
       "code": ":technologist:",
-      "description": "Improve developer experience",
+      "description": "Improve developer experience.",
       "name": "technologist",
+      "semver": null
+    },
+    {
+      "emoji": "💸",
+      "entity": "&#x1F4B8;",
+      "code": ":money_with_wings:",
+      "description": "Add sponsorships or money related infrastructure.",
+      "name": "money-with-wings",
+      "semver": null
+    },
+    {
+      "emoji": "🧵",
+      "entity": "&#x1F9F5;",
+      "code": ":thread:",
+      "description": "Add or update code related to multithreading or concurrency.",
+      "name": "thread",
+      "semver": null
+    },
+    {
+      "emoji": "🦺",
+      "entity": "&#x1F9BA;",
+      "code": ":safety_vest:",
+      "description": "Add or update code related to validation.",
+      "name": "safety-vest",
       "semver": null
     }
   ]
